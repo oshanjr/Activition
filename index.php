@@ -13,27 +13,27 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Hero Section (Dynamic Carousel) -->
-<div class="relative w-full h-[70vh] min-h-[500px] max-h-[800px] overflow-hidden group">
+<div class="relative w-full h-[85vh] md:h-[70vh] min-h-[450px] md:min-h-[500px] max-h-[800px] overflow-hidden group">
     <!-- Carousel Track -->
     <div id="heroCarousel" class="h-full w-full flex transition-transform duration-700 ease-in-out">
         <?php foreach ($slides as $index => $slide): ?>
-            <div class="min-w-full h-full relative flex items-center shrink-0">
+            <div class="w-full shrink-0 h-full relative flex items-center justify-center overflow-hidden">
                 <div class="absolute inset-0">
                     <img src="<?php echo htmlspecialchars($slide['image_url']); ?>" alt="<?php echo htmlspecialchars($slide['title']); ?>" class="w-full h-full object-cover opacity-30">
-                    <div class="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary/40"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-primary/90 via-primary/70 to-primary/40"></div>
                 </div>
                 
-                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
-                    <div class="max-w-2xl" data-aos="fade-up" data-aos-duration="1000">
-                        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight text-white drop-shadow-md">
+                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 text-center md:text-left mt-10 md:mt-0">
+                    <div class="max-w-2xl mx-auto md:mx-0" data-aos="fade-up" data-aos-duration="1000">
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-normal md:tracking-tight mb-4 md:mb-6 leading-tight text-white drop-shadow-md break-words">
                             <?php echo htmlspecialchars($slide['title']); ?>
                         </h1>
-                        <p class="text-lg md:text-2xl text-blue-50 mb-8 max-w-xl font-light drop-shadow">
+                        <p class="text-base sm:text-lg md:text-2xl text-blue-50 mb-6 md:mb-8 max-w-xl mx-auto md:mx-0 font-light drop-shadow">
                             <?php echo htmlspecialchars($slide['subtitle']); ?>
                         </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="flex flex-col sm:flex-row gap-3 md:gap-4 items-center justify-center md:justify-start">
                             <?php if (!empty($slide['button_link']) && !empty($slide['button_text'])): ?>
-                                <a href="<?php echo htmlspecialchars($slide['button_link']); ?>" class="inline-block text-center bg-accent hover:bg-blue-600 text-white font-bold py-4 px-10 rounded-lg shadow-xl shadow-blue-500/20 transition-transform transform hover:-translate-y-1 hover:scale-105">
+                                <a href="<?php echo htmlspecialchars($slide['button_link']); ?>" class="inline-flex justify-center items-center text-center bg-accent hover:bg-blue-600 text-white font-bold py-3 px-8 md:py-4 md:px-10 rounded-lg shadow-xl shadow-blue-500/20 transition-transform transform hover:-translate-y-1 hover:scale-105">
                                     <?php echo htmlspecialchars($slide['button_text']); ?>
                                 </a>
                             <?php
@@ -136,7 +136,7 @@ endif; ?>
                 <h2 class="text-3xl font-extrabold text-gray-900">Featured Equipment</h2>
                 <p class="text-gray-500 mt-2">Discover our top-rated hardware and software solutions.</p>
             </div>
-            <a href="/Activition/shop.php" class="hidden sm:inline-block text-accent font-semibold hover:underline">View All &rarr;</a>
+            <a href="/shop.php" class="hidden sm:inline-block text-accent font-semibold hover:underline">View All &rarr;</a>
         </div>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -148,18 +148,18 @@ foreach ($featured_products as $product): ?>
                             <div class="absolute top-2 right-2 bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded shadow-sm">Digital</div>
                         <?php
     endif; ?>
-                        <a href="/Activition/product.php?id=<?php echo $product['id']; ?>" class="h-full flex items-center justify-center">
+                        <a href="/product.php?id=<?php echo $product['id']; ?>" class="h-full flex items-center justify-center">
                             <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="max-h-full object-contain group-hover:scale-110 transition-transform duration-500">
                         </a>
                     </div>
                     <div class="p-5">
                         <div class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1"><?php echo htmlspecialchars($product['category_name']); ?></div>
                         <h3 class="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
-                            <a href="/Activition/product.php?id=<?php echo $product['id']; ?>" class="hover:text-accent transition-colors"><?php echo htmlspecialchars($product['name']); ?></a>
+                            <a href="/product.php?id=<?php echo $product['id']; ?>" class="hover:text-accent transition-colors"><?php echo htmlspecialchars($product['name']); ?></a>
                         </h3>
                         <div class="flex justify-between items-center mt-4">
                             <span class="text-xl font-black text-gray-900">LKR <?php echo number_format($product['price'], 2); ?></span>
-                            <a href="/Activition/cart.php?action=add&product_id=<?php echo $product['id']; ?>" class="bg-gray-900 hover:bg-accent hover:-translate-y-1 text-white p-2 rounded-lg transition-all shadow-md">
+                            <a href="/cart.php?action=add&product_id=<?php echo $product['id']; ?>" class="bg-gray-900 hover:bg-accent hover:-translate-y-1 text-white p-2 rounded-lg transition-all shadow-md">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             </a>
                         </div>
@@ -169,7 +169,7 @@ foreach ($featured_products as $product): ?>
 endforeach; ?>
         </div>
         <div class="mt-8 sm:hidden text-center">
-            <a href="/Activition/shop.php" class="inline-block text-accent font-semibold hover:underline">View All Products &rarr;</a>
+            <a href="/shop.php" class="inline-block text-accent font-semibold hover:underline">View All Products &rarr;</a>
         </div>
     </div>
 </div>
@@ -224,10 +224,10 @@ endforeach; ?>
             Join thousands of businesses that trust Activition Splash for their critical hardware and software needs. Start browsing our catalog today.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="/Activition/shop.php" class="inline-flex justify-center items-center px-8 py-4 border border-transparent text-lg font-bold rounded-lg text-white bg-accent hover:bg-blue-600 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1">
+            <a href="/shop.php" class="inline-flex justify-center items-center px-8 py-4 border border-transparent text-lg font-bold rounded-lg text-white bg-accent hover:bg-blue-600 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1">
                 Shop Now
             </a>
-            <a href="/Activition/contact.php" class="inline-flex justify-center items-center px-8 py-4 border-2 border-gray-300 text-lg font-bold rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 transition-all transform hover:-translate-y-1">
+            <a href="/contact.php" class="inline-flex justify-center items-center px-8 py-4 border-2 border-gray-300 text-lg font-bold rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 transition-all transform hover:-translate-y-1">
                 Contact Sales
             </a>
         </div>
