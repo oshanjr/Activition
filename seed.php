@@ -70,6 +70,14 @@ try {
             button_link VARCHAR(255),
             order_index INT DEFAULT 0
         );
+
+        CREATE TABLE pages (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            slug VARCHAR(255) NOT NULL UNIQUE,
+            content TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
     ");
     echo "Tables created.\n";
 
@@ -109,6 +117,12 @@ try {
     $pdo->exec("INSERT INTO hero_slides (image_url, title, subtitle, button_text, button_link, order_index) VALUES 
         ('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80', 'Empower Your Business With Premium Tech', 'Source top-tier printers, hardware POS systems, and software licenses trusted by modern enterprises. Fast, secure, and reliable.', 'Explore Shop', '/Activition/shop.php', 1),
         ('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80', 'Next-Gen Point of Sale Solutions', 'Upgrade your retail checkout experience with lightning-fast, beautifully designed POS hardware.', 'Shop POS Systems', '/Activition/shop.php?category=pos-systems', 2)
+    ");
+
+    // Pages
+    $pdo->exec("INSERT INTO pages (title, slug, content) VALUES 
+        ('Terms of Service', 'terms', '<h2>1. Introduction</h2><p>Welcome to Activition Splash terms of service...</p>'),
+        ('Privacy Policy', 'privacy', '<h2>Privacy Data</h2><p>We respect your privacy and secure all your data.</p>')
     ");
 
     echo "Dummy data inserted.\n";

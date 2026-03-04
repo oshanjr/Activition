@@ -20,6 +20,9 @@ require_once __DIR__ . '/../includes/header.php';
                     <li><a href="/Activition/admin/products.php" class="block text-sm text-accent font-bold">Manage Products</a></li>
                     <li><a href="/Activition/admin/categories.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Manage Categories</a></li>
                     <li><a href="/Activition/admin/tags.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Manage Tags</a></li>
+                    <li><a href="/Activition/admin/slides.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Hero Slides</a></li>
+                    <li><a href="/Activition/admin/users.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Manage Admins & Users</a></li>
+                    <li><a href="/Activition/admin/pages.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Manage Pages (CMS)</a></li>
                 </ul>
             </div>
         </div>
