@@ -1,0 +1,144 @@
+<?php
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/auth.php';
+
+requireAdmin();
+
+$id = $_GET['id'] ?? null;
+if (!$id) {
+    header("Location: /Activition/admin/products.php");
+    exit;
+}
+
+$stmt = $pdo->prepare("SELECT * FROM products WHERE id = ?");
+$stmt->execute([$id]);
+$product = $stmt->fetch();
+
+if (!$product) {
+    echo "Product not found.";
+    exit;
+}
+
+$categories = $pdo->query("SELECT * FROM categories ORDER BY name")->fetchAll();
+$error = '';
+$success = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = trim($_POST['name'] ?? '');
+    $category_id = $_POST['category_id'] ?? '';
+    $price = $_POST['price'] ?? 0;
+    $stock = $_POST['stock'] ?? 0;
+    $description = trim($_POST['description'] ?? '');
+    $image_url = trim($_POST['image_url'] ?? '');
+    $is_license = isset($_POST['is_license']) ? 1 : 0;
+    $license_key = trim($_POST['license_key'] ?? '');
+
+    if (empty($name) || empty($category_id) || empty($price)) {
+        $error = 'Name, category, and price are required.';
+    } else {
+        $stmt = $pdo->prepare("UPDATE products SET category_id=?, name=?, description=?, price=?, image_url=?, stock=?, is_license=?, license_key=? WHERE id=?");
+        if ($stmt->execute([$category_id, $name, $description, $price, $image_url, $stock, $is_license, $license_key, $id])) {
+            $success = 'Product updated successfully.';
+            // Refresh product data
+            $stmt = $pdo->prepare("SELECT * FROM products WHERE id = ?");
+            $stmt->execute([$id]);
+            $product = $stmt->fetch();
+        } else {
+            $error = 'Failed to update product.';
+        }
+    }
+}
+
+require_once __DIR__ . '/../includes/header.php';
+?>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex flex-col md:flex-row gap-8">
+        <!-- Admin Sidebar -->
+        <div class="w-full md:w-64 flex-shrink-0">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <h3 class="text-lg font-bold text-gray-900 mb-4 border-b pb-2">Admin Menu</h3>
+                <ul class="space-y-3">
+                    <li><a href="/Activition/admin/index.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Dashboard</a></li>
+                    <li><a href="/Activition/admin/products.php" class="block text-sm text-accent font-bold">Manage Products</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="flex-1">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-extrabold text-gray-900">Edit Product #<?php echo htmlspecialchars($product['id']); ?></h1>
+                <a href="/Activition/admin/products.php" class="text-gray-600 hover:text-primary">&larr; Back to Products</a>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8">
+                <?php if ($error): ?>
+                    <div class="bg-red-50 text-red-600 p-3 rounded-lg mb-6 border border-red-100"><?php echo htmlspecialchars($error); ?></div>
+                <?php endif; ?>
+                <?php if ($success): ?>
+                    <div class="bg-green-50 text-green-700 p-3 rounded-lg mb-6 border border-green-200"><?php echo htmlspecialchars($success); ?></div>
+                <?php endif; ?>
+                
+                <form method="POST" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+                            <input type="text" name="name" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent" value="<?php echo htmlspecialchars($product['name']); ?>">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                            <select name="category_id" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent bg-white">
+                                <option value="">Select a category</option>
+                                <?php foreach ($categories as $cat): ?>
+                                    <option value="<?php echo $cat['id']; ?>" <?php echo $product['category_id'] == $cat['id'] ? 'selected' : ''; ?>><?php echo htmlspecialchars($cat['name']); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
+                            <input type="number" step="0.01" name="price" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent" value="<?php echo htmlspecialchars($product['price']); ?>">
+                        </div>
+                        
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                            <textarea name="description" rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent"><?php echo htmlspecialchars($product['description'] ?? ''); ?></textarea>
+                        </div>
+                        
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
+                            <input type="url" name="image_url" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent" value="<?php echo htmlspecialchars($product['image_url'] ?? ''); ?>">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Stock Quantity</label>
+                            <input type="number" name="stock" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent" value="<?php echo htmlspecialchars($product['stock']); ?>">
+                        </div>
+                        
+                        <div>
+                            <label class="flex items-center space-x-2 mt-8">
+                                <input type="checkbox" name="is_license" value="1" class="rounded border-gray-300 text-accent focus:ring-accent" <?php echo $product['is_license'] ? 'checked' : ''; ?>>
+                                <span class="text-sm font-medium text-gray-700">Digital License Product</span>
+                            </label>
+                        </div>
+                        
+                        <div class="col-span-1 md:col-span-2 border-t border-gray-100 pt-6 mt-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">License Key (Optional)</label>
+                            <input type="text" name="license_key" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent" value="<?php echo htmlspecialchars($product['license_key'] ?? ''); ?>">
+                        </div>
+                    </div>
+                    
+                    <div class="pt-4 flex justify-end">
+                        <button type="submit" class="bg-gray-900 hover:bg-accent text-white font-bold py-2 px-6 rounded-lg shadow transition-colors">
+                            Update Product
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>
