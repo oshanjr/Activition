@@ -5,12 +5,14 @@ require_once __DIR__ . '/../includes/auth.php';
 requireAdmin();
 
 $categories = $pdo->query("SELECT * FROM categories ORDER BY name")->fetchAll();
+$tags = $pdo->query("SELECT * FROM tags ORDER BY name")->fetchAll();
 $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name'] ?? '');
     $category_id = $_POST['category_id'] ?? '';
+    $tags_input = $_POST['tags'] ?? [];
     $price = $_POST['price'] ?? 0;
     $stock = $_POST['stock'] ?? 0;
     $description = trim($_POST['description'] ?? '');
@@ -20,11 +22,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($name) || empty($category_id) || empty($price)) {
         $error = 'Name, category, and price are required.';
-    } else {
+    }
+    else {
         $stmt = $pdo->prepare("INSERT INTO products (category_id, name, description, price, image_url, stock, is_license, license_key) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         if ($stmt->execute([$category_id, $name, $description, $price, $image_url, $stock, $is_license, $license_key])) {
+            $product_id = $pdo->lastInsertId();
+            if (!empty($tags_input)) {
+                $tag_stmt = $pdo->prepare("INSERT INTO product_tags (product_id, tag_id) VALUES (?, ?)");
+                foreach ($tags_input as $tid) {
+                    $tag_stmt->execute([$product_id, $tid]);
+                }
+            }
             $success = 'Product added successfully.';
-        } else {
+        }
+        else {
             $error = 'Failed to add product.';
         }
     }
@@ -42,6 +53,8 @@ require_once __DIR__ . '/../includes/header.php';
                 <ul class="space-y-3">
                     <li><a href="/Activition/admin/index.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Dashboard</a></li>
                     <li><a href="/Activition/admin/products.php" class="block text-sm text-accent font-bold">Manage Products</a></li>
+                    <li><a href="/Activition/admin/categories.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Manage Categories</a></li>
+                    <li><a href="/Activition/admin/tags.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Manage Tags</a></li>
                 </ul>
             </div>
         </div>
@@ -56,10 +69,12 @@ require_once __DIR__ . '/../includes/header.php';
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8">
                 <?php if ($error): ?>
                     <div class="bg-red-50 text-red-600 p-3 rounded-lg mb-6 border border-red-100"><?php echo htmlspecialchars($error); ?></div>
-                <?php endif; ?>
+                <?php
+endif; ?>
                 <?php if ($success): ?>
                     <div class="bg-green-50 text-green-700 p-3 rounded-lg mb-6 border border-green-200"><?php echo htmlspecialchars($success); ?></div>
-                <?php endif; ?>
+                <?php
+endif; ?>
                 
                 <form method="POST" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -74,7 +89,8 @@ require_once __DIR__ . '/../includes/header.php';
                                 <option value="">Select a category</option>
                                 <?php foreach ($categories as $cat): ?>
                                     <option value="<?php echo $cat['id']; ?>"><?php echo htmlspecialchars($cat['name']); ?></option>
-                                <?php endforeach; ?>
+                                <?php
+endforeach; ?>
                             </select>
                         </div>
                         
@@ -96,6 +112,17 @@ require_once __DIR__ . '/../includes/header.php';
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Stock Quantity</label>
                             <input type="number" name="stock" value="0" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent" placeholder="10">
+                        </div>
+                        
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tags (Optional)</label>
+                            <select name="tags[]" multiple class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent bg-white h-32">
+                                <?php foreach ($tags as $tag): ?>
+                                    <option value="<?php echo $tag['id']; ?>"><?php echo htmlspecialchars($tag['name']); ?></option>
+                                <?php
+endforeach; ?>
+                            </select>
+                            <p class="text-xs text-gray-500 mt-1">Hold CTRL (or CMD on Mac) to select multiple tags.</p>
                         </div>
                         
                         <div>

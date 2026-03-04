@@ -25,8 +25,8 @@ require_once __DIR__ . '/includes/header.php';
                 Source top-tier printers, hardware POS systems, and software licenses trusted by modern enterprises. Fast, secure, and reliable.
             </p>
             <div class="flex flex-col sm:flex-row gap-4">
-                <a href="/Activition/catalog.php" class="inline-block text-center bg-accent hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:-translate-y-1">
-                    Explore Catalog
+                <a href="/Activition/shop.php" class="inline-block text-center bg-accent hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:-translate-y-1">
+                    Explore Shop
                 </a>
                 <a href="/Activition/register.php" class="inline-block text-center bg-white text-primary hover:bg-gray-100 font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:-translate-y-1">
                     Partner With Us
@@ -73,7 +73,7 @@ require_once __DIR__ . '/includes/header.php';
                 <h2 class="text-3xl font-extrabold text-gray-900">Featured Equipment</h2>
                 <p class="text-gray-500 mt-2">Discover our top-rated hardware and software solutions.</p>
             </div>
-            <a href="/Activition/catalog.php" class="hidden sm:inline-block text-accent font-semibold hover:underline">View All &rarr;</a>
+            <a href="/Activition/shop.php" class="hidden sm:inline-block text-accent font-semibold hover:underline">View All &rarr;</a>
         </div>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -82,24 +82,30 @@ require_once __DIR__ . '/includes/header.php';
                     <div class="relative h-48 bg-gray-100 flex items-center justify-center p-4">
                         <?php if ($product['is_license']): ?>
                             <div class="absolute top-2 right-2 bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Digital</div>
-                        <?php endif; ?>
-                        <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                        <?php
+    endif; ?>
+                        <a href="/Activition/product.php?id=<?php echo $product['id']; ?>" class="h-full flex items-center justify-center">
+                            <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                        </a>
                     </div>
                     <div class="p-5">
                         <div class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1"><?php echo htmlspecialchars($product['category_name']); ?></div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-2 line-clamp-2"><?php echo htmlspecialchars($product['name']); ?></h3>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+                            <a href="/Activition/product.php?id=<?php echo $product['id']; ?>" class="hover:text-accent"><?php echo htmlspecialchars($product['name']); ?></a>
+                        </h3>
                         <div class="flex justify-between items-center mt-4">
                             <span class="text-xl font-black text-gray-900">$<?php echo number_format($product['price'], 2); ?></span>
-                            <a href="/Activition/checkout.php?product_id=<?php echo $product['id']; ?>" class="bg-gray-900 hover:bg-accent text-white p-2 rounded-lg transition-colors">
+                            <a href="/Activition/cart.php?action=add&product_id=<?php echo $product['id']; ?>" class="bg-gray-900 hover:bg-accent text-white p-2 rounded-lg transition-colors">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             </a>
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php
+endforeach; ?>
         </div>
         <div class="mt-8 sm:hidden text-center">
-            <a href="/Activition/catalog.php" class="inline-block text-accent font-semibold hover:underline">View All Products &rarr;</a>
+            <a href="/Activition/shop.php" class="inline-block text-accent font-semibold hover:underline">View All Products &rarr;</a>
         </div>
     </div>
 </div>

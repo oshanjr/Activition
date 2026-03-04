@@ -21,6 +21,8 @@ require_once __DIR__ . '/../includes/header.php';
                 <ul class="space-y-3">
                     <li><a href="/Activition/admin/index.php" class="block text-sm text-accent font-bold">Dashboard</a></li>
                     <li><a href="/Activition/admin/products.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Manage Products</a></li>
+                    <li><a href="/Activition/admin/categories.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Manage Categories</a></li>
+                    <li><a href="/Activition/admin/tags.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Manage Tags</a></li>
                 </ul>
             </div>
         </div>

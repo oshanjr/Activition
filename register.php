@@ -12,21 +12,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
-    
+
     if (empty($name) || empty($email) || empty($password)) {
         $error = 'All fields are required.';
-    } else {
+    }
+    else {
         $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
         $stmt->execute([$email]);
         if ($stmt->fetch()) {
             $error = 'Email is already registered.';
-        } else {
+        }
+        else {
             $hashed = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'customer')");
             if ($stmt->execute([$name, $email, $hashed])) {
                 header("Location: /Activition/login.php?registered=1");
                 exit;
-            } else {
+            }
+            else {
                 $error = 'Registration failed. Please try again.';
             }
         }
@@ -40,13 +43,14 @@ require_once __DIR__ . '/includes/header.php';
     <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
         <div class="bg-primary px-6 py-8 text-white text-center relative overflow-hidden">
             <h1 class="relative z-10 text-3xl font-bold mb-2">Create Account</h1>
-            <p class="relative z-10 text-blue-100 font-medium">Join TechSupply Hub today.</p>
+            <p class="relative z-10 text-blue-100 font-medium">Join Activition Splash today.</p>
         </div>
         
         <div class="p-6 md:p-8">
             <?php if ($error): ?>
                 <div class="bg-red-50 text-red-600 p-3 rounded-lg mb-6 text-sm border border-red-100"><?php echo htmlspecialchars($error); ?></div>
-            <?php endif; ?>
+            <?php
+endif; ?>
             
             <form method="POST" class="space-y-5">
                 <div>

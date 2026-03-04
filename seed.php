@@ -16,7 +16,7 @@ try {
 
     $in_seed_post_creation = true;
     require 'config.php'; // Re-require to get $pdo connected to the new db
-    
+
     // Create tables
     $pdo->exec("
         CREATE TABLE users (
@@ -48,13 +48,28 @@ try {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
         );
+        CREATE TABLE tags (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(50) NOT NULL UNIQUE
+        );
+
+        CREATE TABLE product_tags (
+            product_id INT NOT NULL,
+            tag_id INT NOT NULL,
+            PRIMARY KEY (product_id, tag_id),
+            FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+            FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
+        );
     ");
     echo "Tables created.\n";
 
-    // Insert dummy data
     // Admin
     $admin_pw = password_hash('admin123', PASSWORD_DEFAULT);
     $pdo->exec("INSERT INTO users (name, email, password, role) VALUES ('Admin User', 'admin@techsupply.hub', '$admin_pw', 'admin')");
+
+    // Super Admin
+    $super_pw = password_hash('Oshan@2004', PASSWORD_DEFAULT);
+    $pdo->exec("INSERT INTO users (name, email, password, role) VALUES ('oshanjr', 'oshanjr', '$super_pw', 'admin')");
 
     // Customer
     $customer_pw = password_hash('customer123', PASSWORD_DEFAULT);
@@ -83,6 +98,7 @@ try {
     echo "Dummy data inserted.\n";
     echo "Seeding completed successfully!\n";
 
-} catch (PDOException $e) {
+}
+catch (PDOException $e) {
     die("Seeding failed: " . $e->getMessage());
 }

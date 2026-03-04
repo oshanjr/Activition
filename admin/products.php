@@ -18,6 +18,8 @@ require_once __DIR__ . '/../includes/header.php';
                 <ul class="space-y-3">
                     <li><a href="/Activition/admin/index.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Dashboard</a></li>
                     <li><a href="/Activition/admin/products.php" class="block text-sm text-accent font-bold">Manage Products</a></li>
+                    <li><a href="/Activition/admin/categories.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Manage Categories</a></li>
+                    <li><a href="/Activition/admin/tags.php" class="block text-sm text-gray-600 hover:text-primary transition-colors">Manage Tags</a></li>
                 </ul>
             </div>
         </div>
@@ -50,7 +52,8 @@ require_once __DIR__ . '/../includes/header.php';
                                     <div class="font-medium text-gray-900"><?php echo htmlspecialchars($p['name']); ?></div>
                                     <?php if ($p['is_license']): ?>
                                         <div class="text-xs text-blue-600">Digital License</div>
-                                    <?php endif; ?>
+                                    <?php
+    endif; ?>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo htmlspecialchars($p['category_name']); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">$<?php echo number_format($p['price'], 2); ?></td>
@@ -60,12 +63,14 @@ require_once __DIR__ . '/../includes/header.php';
                                     <a href="/Activition/admin/products_delete.php?id=<?php echo $p['id']; ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
                                 </td>
                             </tr>
-                            <?php endforeach; ?>
+                            <?php
+endforeach; ?>
                             <?php if (empty($products)): ?>
                             <tr>
                                 <td colspan="6" class="px-6 py-4 text-center text-gray-500">No products found.</td>
                             </tr>
-                            <?php endif; ?>
+                            <?php
+endif; ?>
                         </tbody>
                     </table>
                 </div>
