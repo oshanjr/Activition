@@ -56,7 +56,7 @@ require_once __DIR__ . '/../includes/header.php';
     endif; ?>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo htmlspecialchars($p['category_name']); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">$<?php echo number_format($p['price'], 2); ?></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">LKR <?php echo number_format($p['price'], 2); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo $p['stock']; ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <a href="/Activition/admin/products_edit.php?id=<?php echo $p['id']; ?>" class="text-accent hover:text-blue-900 mr-3">Edit</a>

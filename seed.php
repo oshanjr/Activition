@@ -60,6 +60,16 @@ try {
             FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
             FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
         );
+
+        CREATE TABLE hero_slides (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            image_url VARCHAR(255) NOT NULL,
+            title VARCHAR(150),
+            subtitle TEXT,
+            button_text VARCHAR(50),
+            button_link VARCHAR(255),
+            order_index INT DEFAULT 0
+        );
     ");
     echo "Tables created.\n";
 
@@ -93,6 +103,12 @@ try {
         (3, 'Clover Station Duo', 'Fast and secure POS system for retail', 1200.00, 'https://placehold.co/400x300?text=Clover+Station', 5, FALSE, NULL),
         (4, 'Windows 11 Pro OEM Key', 'Digital activation key for Windows 11 Professional', 39.99, 'https://placehold.co/400x300?text=Win11+Pro', 100, TRUE, 'W269N-WFGWX-YVC9B-4J6C9-T83GX'),
         (4, 'Microsoft Office 2021 Professional Plus', 'Lifetime license key', 89.99, 'https://placehold.co/400x300?text=Office+2021', 50, TRUE, 'NMMKJ-6RK4F-KMJVX-8D9MJ-6PBKP')
+    ");
+
+    // Hero Slides
+    $pdo->exec("INSERT INTO hero_slides (image_url, title, subtitle, button_text, button_link, order_index) VALUES 
+        ('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80', 'Empower Your Business With Premium Tech', 'Source top-tier printers, hardware POS systems, and software licenses trusted by modern enterprises. Fast, secure, and reliable.', 'Explore Shop', '/Activition/shop.php', 1),
+        ('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80', 'Next-Gen Point of Sale Solutions', 'Upgrade your retail checkout experience with lightning-fast, beautifully designed POS hardware.', 'Shop POS Systems', '/Activition/shop.php?category=pos-systems', 2)
     ");
 
     echo "Dummy data inserted.\n";

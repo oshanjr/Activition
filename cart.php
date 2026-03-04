@@ -94,9 +94,9 @@ else: ?>
                                         <span class="font-medium text-gray-900"><?php echo htmlspecialchars($item['product']['name']); ?></span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-center text-gray-500">$<?php echo number_format($item['product']['price'], 2); ?></td>
+                                <td class="px-6 py-4 text-center text-gray-500">LKR <?php echo number_format($item['product']['price'], 2); ?></td>
                                 <td class="px-6 py-4 text-center font-medium"><?php echo $item['qty']; ?></td>
-                                <td class="px-6 py-4 text-right font-medium text-gray-900">$<?php echo number_format($item['line_total'], 2); ?></td>
+                                <td class="px-6 py-4 text-right font-medium text-gray-900">LKR <?php echo number_format($item['line_total'], 2); ?></td>
                                 <td class="px-6 py-4 text-right">
                                     <a href="/Activition/cart.php?action=remove&product_id=<?php echo $item['product']['id']; ?>" class="text-red-500 hover:text-red-700">
                                         <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
@@ -117,15 +117,15 @@ else: ?>
                 <div class="space-y-3 text-sm">
                     <div class="flex justify-between text-gray-600">
                         <span>Subtotal</span>
-                        <span class="font-medium text-gray-900">$<?php echo number_format($subtotal, 2); ?></span>
+                        <span class="font-medium text-gray-900">LKR <?php echo number_format($subtotal, 2); ?></span>
                     </div>
                     <div class="flex justify-between text-gray-600">
                         <span>Estimated Tax</span>
-                        <span class="font-medium text-gray-900">$<?php echo number_format($tax, 2); ?></span>
+                        <span class="font-medium text-gray-900">LKR <?php echo number_format($tax, 2); ?></span>
                     </div>
                     <div class="flex justify-between text-lg font-black text-gray-900 pt-4 border-t border-gray-200 mt-2">
                         <span>Total</span>
-                        <span>$<?php echo number_format($total, 2); ?></span>
+                        <span>LKR <?php echo number_format($total, 2); ?></span>
                     </div>
                 </div>
                 <a href="/Activition/checkout.php?cart=1" class="block w-full text-center mt-8 bg-gray-900 hover:bg-accent text-white font-bold py-3.5 px-4 rounded-lg shadow-md transition-all">

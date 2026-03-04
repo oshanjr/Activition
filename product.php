@@ -68,7 +68,7 @@ endif; ?>
                 <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4"><?php echo htmlspecialchars($product['name']); ?></h1>
                 
                 <div class="text-3xl font-black text-gray-900 mb-6 border-b border-gray-100 pb-6">
-                    $<?php echo number_format($product['price'], 2); ?>
+                    LKR <?php echo number_format($product['price'], 2); ?>
                 </div>
                 
                 <div class="prose prose-sm text-gray-600 mb-8">

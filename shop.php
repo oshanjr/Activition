@@ -100,7 +100,7 @@ else: ?>
                                 <p class="text-sm text-gray-600 mb-4 flex-1 line-clamp-3"><?php echo htmlspecialchars($product['description']); ?></p>
                                 
                                 <div class="flex justify-between items-end mt-auto pt-4 border-t border-gray-100">
-                                    <span class="text-2xl font-black text-gray-900">$<?php echo number_format($product['price'], 2); ?></span>
+                                    <span class="text-2xl font-black text-gray-900">LKR <?php echo number_format($product['price'], 2); ?></span>
                                     
                                     <?php if ($product['stock'] > 0): ?>
                                         <a href="/Activition/cart.php?action=add&product_id=<?php echo $product['id']; ?>" class="bg-gray-900 hover:bg-accent text-white py-2 px-4 rounded-lg text-sm font-bold transition-colors shadow flex items-center gap-2">
