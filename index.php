@@ -174,19 +174,7 @@ endforeach; ?>
     </div>
 </div>
 
-<!-- Trusted Brands -->
-<div class="py-12 bg-white border-t border-gray-100 overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up">
-        <p class="text-center text-sm font-bold text-gray-400 uppercase tracking-widest mb-8">Trusted by Innovative Companies Worldwide</p>
-        <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-            <svg class="h-8 md:h-10 text-gray-800" viewBox="0 0 100 30" fill="currentColor"><path d="M10,20 h20 v-4 h-20 z M40,20 h20 v-4 h-20 z M70,20 h20 v-4 h-20 z M10,10 h20 v-4 h-20 z M40,10 h20 v-4 h-20 z M70,10 h20 v-4 h-20 z"/></svg>
-            <div class="text-2xl font-black tracking-tighter text-gray-800">TECHNOINC</div>
-            <div class="text-2xl font-bold italic text-gray-800">GlobalSys</div>
-            <div class="text-2xl font-black uppercase text-gray-800">DataCorp</div>
-            <div class="text-2xl font-medium tracking-widest text-gray-800">NEXUS</div>
-        </div>
-    </div>
-</div>
+
 
 <!-- Statistics Section -->
 <div class="relative py-20 bg-primary text-white overflow-hidden">
